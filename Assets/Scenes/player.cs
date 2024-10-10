@@ -6,7 +6,10 @@ public class player : MonoBehaviour
 {
     public float speed;
     public float mouse;
-    public GameObject bullet;
+    private GameObject bullet;
+    public GameObject blueBullet;
+    public GameObject redBullet;
+    public GameObject greenBullet;
     float bulletcoll = 0;
     int flag = 0;
 
@@ -51,7 +54,7 @@ public class player : MonoBehaviour
     private void Shoot()
     {
         //좌클릭시
-        if (Input.GetKeyDown(KeyCode.Mouse0) && flag ==0)
+        if (Input.GetMouseButtonDown(0) && flag ==0)
         {
             Debug.Log("shoot bullet");
             Vector3 bulletPos = transform.position;
@@ -60,6 +63,27 @@ public class player : MonoBehaviour
             flag = 1;
         }
         //우클릭시
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            Debug.Log("Change bullet");
+            
+            if (bullet == blueBullet) //blue
+            {
+                bullet = redBullet;
+            }
+            else if(bullet == redBullet)
+            {
+                bullet = greenBullet;
+            }
+            else
+            {
+                bullet = blueBullet;
+            }
+            Debug.Log(bullet.layer);
+        }
+
+
     }
 
     private void Awake()
@@ -71,7 +95,7 @@ public class player : MonoBehaviour
     }
     void Start()
     {
-        
+        bullet = blueBullet;
     }
 
     // Update is called once per frame

@@ -25,6 +25,8 @@ public class vendingMove : MonoBehaviour
     //flag == 3
 
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,13 +65,23 @@ public class vendingMove : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == 12)
+        if (collision.gameObject.layer == 12 && gameObject.layer == 13) //blue building & blue bullets
         {
             Destroy(gameObject);
         }
-        
-        else if (collision.gameObject.layer == 11) //building
+
+        else if (collision.gameObject.layer == 14 && gameObject.layer == 15) //red vending & red bullets
         {
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.layer == 16 && gameObject.layer == 17) //green vending & green bullets
+        {
+            Destroy(gameObject);
+        }
+
+        if (collision.gameObject.layer == 9) 
+        {
+            Debug.Log("colls with wall");
             moveDirection = new Vector3(-moveDirection.x, 0, -moveDirection.z);
         }
     }
