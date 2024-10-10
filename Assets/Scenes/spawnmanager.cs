@@ -15,28 +15,35 @@ public class spawnmanager : MonoBehaviour
     int nowSpawn = 0;
     void Spawn(int flag)
     {
-        int x = 0; int z = 0;
-        while((x < 60 || x > -10) && (z < 60 || z > -10))
+
+        int x, z;
+        x = Random.Range(-50, 121);
+        z = Random.Range(-50, 121);
+
+        if ((x > -10 && x < 60) && z > -5 && z < 50) { } //no spawn
+
+        else
         {
-            x = Random.Range(-50, 121);
-            z = Random.Range(-50, 121);
+            witch = new Vector3(x, 3, z);
+            nowSpawn++;
+            switch (flag)
+            {
+                case 1:
+                    Instantiate(enemy, witch, transform.rotation);
+                    break;
+                case 2:
+                    Instantiate(enemy2, witch, transform.rotation);
+                    break;
+                case 3:
+                    Instantiate(enemy3, witch, transform.rotation);
+                    break;
+                default:
+                    break;
+            }
         }
 
-        witch = new Vector3(x, 3, z);
-        switch (flag)
-        {
-            case 1:
-                Instantiate(enemy, witch, transform.rotation);
-                break;
-            case 2:
-                Instantiate(enemy2, witch, transform.rotation);
-                break;
-            case 3:
-                Instantiate(enemy3, witch, transform.rotation);
-                break;
-            default:
-                break;
-        }
+
+
     }
 
 
@@ -54,7 +61,7 @@ public class spawnmanager : MonoBehaviour
         {
             flag = Random.Range(1, 4);
             Spawn(flag);
-            nowSpawn++;
+            
             startTime = 0;
         }
     }
