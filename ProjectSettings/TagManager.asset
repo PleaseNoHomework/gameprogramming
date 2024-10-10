@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - stealingpoint
+  - sittingpoint
+  - pickuppoint
+  - waypoint
   layers:
   - Default
   - TransparentFX
@@ -14,15 +18,15 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Building
+  - Ground
+  - Player
+  - Bullets
+  - Vending
+  - Redbullets
+  - Redvending
+  - Greenbullets
+  - Greenvending
   - 
   - 
   - 
