@@ -8,6 +8,7 @@ TagManager:
   - sittingpoint
   - pickuppoint
   - waypoint
+  - UpgradePoint
   layers:
   - Default
   - TransparentFX

@@ -68,20 +68,26 @@ public class vendingMove : MonoBehaviour
         if (collision.gameObject.layer == 12 && gameObject.layer == 13) //blue building & blue bullets
         {
             Destroy(gameObject);
+            gameManager.instance.score += 100;
+            gameManager.instance.enemyKill++;
+            Debug.Log("enemy Killed!" + gameManager.instance.enemyKill);
         }
 
         else if (collision.gameObject.layer == 14 && gameObject.layer == 15) //red vending & red bullets
         {
             Destroy(gameObject);
+            gameManager.instance.score += 200;
+            gameManager.instance.enemyKill++;
         }
         else if (collision.gameObject.layer == 16 && gameObject.layer == 17) //green vending & green bullets
         {
             Destroy(gameObject);
+            gameManager.instance.score += 300;
+            gameManager.instance.enemyKill++;
         }
 
         if (collision.gameObject.layer == 9) 
         {
-            Debug.Log("colls with wall");
             moveDirection = new Vector3(-moveDirection.x, 0, -moveDirection.z);
         }
     }

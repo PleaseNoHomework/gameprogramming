@@ -20,11 +20,7 @@ public class player : MonoBehaviour
     {
         MouseX += Input.GetAxisRaw("Mouse X") * mouse* Time.deltaTime;
 
-        MouseY -= Input.GetAxisRaw("Mouse Y") * mouse* Time.deltaTime;
-
-        MouseY = Mathf.Clamp(MouseY, -90f, 90f); //Clamp를 통해 최소값 최대값을 넘지 않도록함
-
-        transform.localRotation = Quaternion.Euler(MouseY, MouseX, 0f);// 각 축을 한꺼번에 계산
+        transform.localRotation = Quaternion.Euler(0f, MouseX, 0f);// 각 축을 한꺼번에 계산
     }
 
     private void Move()
@@ -32,19 +28,19 @@ public class player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift)) speed *= 2;
         if (Input.GetKeyUp(KeyCode.LeftShift)) speed /= 2;
 
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Translate(speed * Time.deltaTime, 0, 0);
-        }
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.W))
         {
             transform.Translate(-speed * Time.deltaTime, 0, 0);
         }
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.S))
+        {
+            transform.Translate(speed * Time.deltaTime, 0, 0);
+        }
+        if (Input.GetKey(KeyCode.D))
         {
             transform.Translate(0, 0, speed * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.A))
         {
             transform.Translate(0, 0, -speed * Time.deltaTime);
         }
@@ -108,7 +104,7 @@ public class player : MonoBehaviour
         if (flag == 1)
         {
             bulletcoll += Time.deltaTime;
-            if (bulletcoll > 1)
+            if (bulletcoll > 0.5f)
             {
                 flag = 0;
                 bulletcoll = 0;
@@ -116,4 +112,9 @@ public class player : MonoBehaviour
         }
     }
 
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.gameObject.tag);
+    }
 }

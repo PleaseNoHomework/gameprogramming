@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class spawnmanager : MonoBehaviour
 {
+
+
     public GameObject enemy;
     public GameObject enemy2;
     public GameObject enemy3;
     public float startTime;
     public float spawnRate;
+    public float endTime;
+
     public Vector3 witch; //생성은 x, z가 -50 ~ 120 사이에 존재한다
     public int spawn;
     int flag = 1;
     int nowSpawn = 0;
+
+
+
+
     void Spawn(int flag)
     {
 
@@ -50,14 +58,14 @@ public class spawnmanager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         startTime += Time.deltaTime;
-        if (startTime >= spawnRate && nowSpawn < spawn)
+        if (startTime >= spawnRate && gameManager.instance.enemySpawn > nowSpawn)
         {
             flag = Random.Range(1, 4);
             Spawn(flag);

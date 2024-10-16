@@ -14,7 +14,7 @@ public class bulletMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(0, 0, speed * Time.deltaTime);
+        transform.Translate(-speed * Time.deltaTime, 0, 0);
     }
 
     private void OnCollisionEnter(Collision collision)
