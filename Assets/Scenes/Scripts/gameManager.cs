@@ -27,12 +27,11 @@ public class gameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemyKill > 2)
+        if (enemyKill >= enemySpawn)
         {
             SceneManager.LoadScene("WinScene");
         }
         endTime -= Time.deltaTime;
-        Debug.Log(endTime);
         if (endTime < 0)
         {
             SceneManager.LoadScene("LoseScene");

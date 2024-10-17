@@ -6,6 +6,8 @@ public class player : MonoBehaviour
 {
     public float speed;
     public float mouse;
+    int bulletCharge = 0;
+    int bulletReload = 0;
     private GameObject bullet;
     public GameObject blueBullet;
     public GameObject redBullet;
@@ -13,8 +15,7 @@ public class player : MonoBehaviour
     float bulletcoll = 0;
     int flag = 0;
 
-    float MouseX, MouseY;
-    Rigidbody rb;
+    float MouseX;
     // Start is called before the first frame update
     private void Rotate()
     {
@@ -50,19 +51,18 @@ public class player : MonoBehaviour
     private void Shoot()
     {
         //좌클릭시
-        if (Input.GetMouseButtonDown(0) && flag ==0)
+        if (Input.GetMouseButtonDown(0) && flag ==0 && bulletCharge > 0)
         {
-            Debug.Log("shoot bullet");
             Vector3 bulletPos = transform.position;
             bulletPos.y += 3;
             Instantiate(bullet, bulletPos, transform.rotation);
+            bulletCharge--;
             flag = 1;
         }
         //우클릭시
 
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("Change bullet");
             
             if (bullet == blueBullet) //blue
             {
@@ -76,9 +76,13 @@ public class player : MonoBehaviour
             {
                 bullet = blueBullet;
             }
-            Debug.Log(bullet.layer);
         }
 
+        if (Input.GetKeyDown(KeyCode.R) && bulletReload == 1)
+        {
+            Debug.Log("reload!");
+            bulletCharge = 10;
+        }
 
     }
 
@@ -87,10 +91,10 @@ public class player : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        rb = GetComponent<Rigidbody>();
     }
     void Start()
     {
+        bulletCharge = 10;
         bullet = blueBullet;
     }
 
@@ -113,8 +117,21 @@ public class player : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(collision.gameObject.tag);
+        if (other.gameObject.tag == "UpgradePoint")
+        {
+            Debug.Log("can reload!");
+            bulletReload = 1;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "UpgradePoint")
+        {
+            Debug.Log("cant reload!");
+            bulletReload = 0;
+        }
     }
 }

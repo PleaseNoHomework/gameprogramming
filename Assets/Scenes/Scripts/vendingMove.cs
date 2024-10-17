@@ -10,6 +10,7 @@ public class vendingMove : MonoBehaviour
     public float speed;
     private Vector3 moveDirection;
     public int flag = 0;
+    public int destroyFlag = 0;
     //일직선으로 움직임, 방향 랜덤
     void aiMove1() {
         float angle = Random.Range(0f, 360f);
@@ -65,30 +66,42 @@ public class vendingMove : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == 12 && gameObject.layer == 13) //blue building & blue bullets
-        {
-            Destroy(gameObject);
-            gameManager.instance.score += 100;
-            gameManager.instance.enemyKill++;
-            Debug.Log("enemy Killed!" + gameManager.instance.enemyKill);
-        }
+        if (destroyFlag == 1) return;
 
-        else if (collision.gameObject.layer == 14 && gameObject.layer == 15) //red vending & red bullets
-        {
-            Destroy(gameObject);
-            gameManager.instance.score += 200;
-            gameManager.instance.enemyKill++;
-        }
-        else if (collision.gameObject.layer == 16 && gameObject.layer == 17) //green vending & green bullets
-        {
-            Destroy(gameObject);
-            gameManager.instance.score += 300;
-            gameManager.instance.enemyKill++;
-        }
-
-        if (collision.gameObject.layer == 9) 
+        if (collision.gameObject.layer == 9)
         {
             moveDirection = new Vector3(-moveDirection.x, 0, -moveDirection.z);
         }
+        else
+        {
+            destroyFlag = 1;
+            if (collision.gameObject.layer == 12 && gameObject.layer == 13) //blue building & blue bullets
+            {
+                Destroy(gameObject);
+                gameManager.instance.score += 100;
+                gameManager.instance.enemyKill++;
+                Debug.Log("enemy Killed!" + gameManager.instance.enemyKill);
+            }
+
+            else if (collision.gameObject.layer == 14 && gameObject.layer == 15) //red vending & red bullets
+            {
+                Destroy(gameObject);
+                gameManager.instance.score += 200;
+                gameManager.instance.enemyKill++;
+                Debug.Log("enemy Killed!" + gameManager.instance.enemyKill);
+            }
+            else if (collision.gameObject.layer == 16 && gameObject.layer == 17) //green vending & green bullets
+            {
+                Destroy(gameObject);
+                gameManager.instance.score += 300;
+                gameManager.instance.enemyKill++;
+                Debug.Log("enemy Killed!" + gameManager.instance.enemyKill);
+            }
+            else
+            {
+                destroyFlag = 0;
+            }
+        }
     }
+
 }

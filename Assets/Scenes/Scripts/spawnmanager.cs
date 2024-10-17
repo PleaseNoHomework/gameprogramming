@@ -25,8 +25,8 @@ public class spawnmanager : MonoBehaviour
     {
 
         int x, z;
-        x = Random.Range(-50, 121);
-        z = Random.Range(-50, 121);
+        x = Random.Range(-50, 180);
+        z = Random.Range(-50, 180);
 
         if ((x > -10 && x < 60) && z > -5 && z < 50) { } //no spawn
 
