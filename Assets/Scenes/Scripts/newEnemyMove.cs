@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class newEnemyMove : MonoBehaviour
 {
@@ -13,16 +14,18 @@ public class newEnemyMove : MonoBehaviour
     }
 
     public int flag;
+    private int destroyFlag;
     private Vector3 moveDirection = Vector3.zero;
     public float speed;
     private float times;
     private float afterSpawnTime;
     public float stopTime;
+    private float deadTime;
     private State _state;
-
+    VisualEffect vfx;
     GameObject nexus;
     GameObject player;
-
+    public GameObject killParticle;
     void move(int flag, float time)
     {
         switch (flag)
@@ -75,12 +78,12 @@ public class newEnemyMove : MonoBehaviour
 
     void toNexus(float time) {
         setDirection(nexus.transform.position);
-        transform.Translate(moveDirection * speed * time);
+        transform.Translate(moveDirection * speed * time * 0.7f);
     }
 
     void toPlayer(float time) {
         setDirection(player.transform.position);
-        transform.Translate(moveDirection * speed * time * 1.3f);
+        transform.Translate(moveDirection * speed * time * 0.8f);
     }
 
 
@@ -106,9 +109,11 @@ public class newEnemyMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        destroyFlag = 0;
         times = 0;
         afterSpawnTime = 0;
         stopTime = 0;
+        deadTime = 0;
         _state = State.Idle;
         setRandomDirection();
         nexus = GameObject.Find("Factory");
@@ -150,23 +155,35 @@ public class newEnemyMove : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (destroyFlag == 1) return;
+
+        if (collision.gameObject.tag == "UpgradePoint") // nexus
+        {
+            Instantiate(killParticle, transform.position, Quaternion.identity);
+            Debug.Log("collision Nexus!!!");
+            Destroy(gameObject);
+            gameManager.instance.nexusLife--;
+        }
+
+        if (collision.gameObject.tag == "Player") //Lost player Life;
+        {
+            Instantiate(killParticle, transform.position, Quaternion.identity);
+            Debug.Log("collision Player!!!");
+            Destroy(gameObject);
+            gameManager.instance.playerLife--;
+        }
         if (collision.gameObject.layer == 9)
         {
             moveDirection = new Vector3(-moveDirection.x, 0, -moveDirection.z);
         }
 
-        if (collision.gameObject.tag == "UpgradePoint") // nexus
+        if ((gameObject.layer == 13 && collision.gameObject.layer == 12) ||
+            (gameObject.layer == 15 && collision.gameObject.layer == 14) ||
+            (gameObject.layer == 17 && collision.gameObject.layer == 16))
         {
-            Debug.Log("collision Nexus!!!");
+            destroyFlag = 1;
+            Instantiate(killParticle, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
-
-        if (collision.gameObject.tag == "Player") //Lost player Life;
-        {
-            Debug.Log("collision Player!!!");
-            Destroy(gameObject);
-        }
-
-
     }
 }

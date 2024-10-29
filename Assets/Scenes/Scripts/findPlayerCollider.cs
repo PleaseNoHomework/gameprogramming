@@ -11,7 +11,6 @@ public class findPlayerCollider : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             enemyMove.stopTime = 0;
-            Debug.Log("Find Player!");
             enemyMove.changeState(2);
         }
     }

@@ -12,8 +12,10 @@ public class gameManager : MonoBehaviour
     public int score = 0;
     public int enemySpawn = 10;
     public int enemyKill = 0;
-    public float endTime = 5f;
-    public UnityEvent gameFinished;
+
+    public int playerLife = 3;
+    public int nexusLife = 3;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,8 +33,7 @@ public class gameManager : MonoBehaviour
         {
             SceneManager.LoadScene("WinScene");
         }
-        endTime -= Time.deltaTime;
-        if (endTime < 0)
+        if (playerLife <= 0 || nexusLife <= 0)
         {
             SceneManager.LoadScene("LoseScene");
         }
