@@ -9,6 +9,7 @@ TagManager:
   - pickuppoint
   - waypoint
   - UpgradePoint
+  - playerTrigger
   layers:
   - Default
   - TransparentFX

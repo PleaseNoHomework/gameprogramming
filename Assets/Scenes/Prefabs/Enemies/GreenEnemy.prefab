@@ -120,8 +120,9 @@ GameObject:
   - component: {fileID: 4490006407647537975}
   - component: {fileID: -7016795262422766864}
   - component: {fileID: -6238580830305008088}
+  - component: {fileID: -4575297326608065725}
   m_Layer: 17
-  m_Name: tree_prefab
+  m_Name: GreenEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,7 +172,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6839876351992569920}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: deb42a93cdc104f479ca9d9534ba10da, type: 3}
   m_Name: 
@@ -179,6 +180,7 @@ MonoBehaviour:
   endTime: 100
   speed: 8
   flag: 3
+  destroyFlag: 0
 --- !u!54 &-6238580830305008088
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -206,3 +208,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &-4575297326608065725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6839876351992569920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 147bd65853e3e1f42bbf3182c8f1d3e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flag: 3
+  speed: 20
+  player: {fileID: 0}
