@@ -144,7 +144,7 @@ public class newEnemyMove : MonoBehaviour
                 break;
             case State.Stop:
                 stopTime += Time.deltaTime;
-                if (stopTime >= 2)
+                if (stopTime >= 2f)
                 { 
                     _state = State.Move2Nexus;
                     stopTime = 0;
