@@ -6,9 +6,8 @@ public class spawnmanager : MonoBehaviour
 {
 
 
-    public GameObject enemy;
-    public GameObject enemy2;
-    public GameObject enemy3;
+    public GameObject whiteEnemy;
+    public GameObject blackEnemy;
     public float startTime;
     public float spawnRate;
     public float endTime;
@@ -37,16 +36,12 @@ public class spawnmanager : MonoBehaviour
             switch (flag)
             {
                 case 1:
-                    Instantiate(enemy, witch, transform.rotation);
+                    Instantiate(whiteEnemy, witch, transform.rotation);
                     break;
                 case 2:
-                    Instantiate(enemy2, witch, transform.rotation);
+                    Instantiate(blackEnemy, witch, transform.rotation);
                     break;
-                case 3:
-                    Instantiate(enemy3, witch, transform.rotation);
-                    break;
-                default:
-                    break;
+
             }
         }
 
@@ -67,7 +62,7 @@ public class spawnmanager : MonoBehaviour
         startTime += Time.deltaTime;
         if (startTime >= spawnRate && gameManager.instance.enemySpawn > nowSpawn)
         {
-            flag = Random.Range(1, 4);
+            flag = Random.Range(1, 3);
             Spawn(flag);
             
             startTime = 0;

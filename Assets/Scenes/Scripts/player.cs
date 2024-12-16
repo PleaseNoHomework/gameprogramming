@@ -6,15 +6,16 @@ public class player : MonoBehaviour
 {
     public float speed;
     public float mouse;
-    int bulletCharge = 0;
     int bulletReload = 0;
     private GameObject bullet;
-    public GameObject blueBullet;
-    public GameObject redBullet;
-    public GameObject greenBullet;
+    public GameObject blackBullet;
+    public GameObject whiteBullet;
     float bulletcoll = 0;
     int flag = 0;
+    
 
+    //오디오 소스 0 : 총격발 1 : 빈총격발 2 : 재장전소리
+    AudioSource[] audios;
     float MouseX;
     // Start is called before the first frame update
     private void Rotate()
@@ -51,37 +52,47 @@ public class player : MonoBehaviour
     private void Shoot()
     {
         //좌클릭시
-        if (Input.GetMouseButtonDown(0) && flag ==0 && bulletCharge > 0)
+        if (Input.GetMouseButtonDown(0) && flag ==0)
         {
-            Vector3 bulletPos = transform.position;
-            bulletPos.y += 3;
-            Instantiate(bullet, bulletPos, transform.rotation);
-            bulletCharge--;
-            flag = 1;
+            if (gameManager.instance.bulletCharge > 0) { //성공적인 격발
+                Vector3 bulletPos = transform.position;
+                bulletPos.y += 3;
+                Instantiate(bullet, bulletPos, transform.rotation);
+                gameManager.instance.bulletCharge--;
+                UIController.instance.updateBulletRemain();
+                flag = 1;
+                audios[0].Play();
+            }
+            else
+            {
+                flag = 1;
+                audios[1].Play(); 
+            }
         }
+
         //우클릭시
 
         if (Input.GetMouseButtonDown(1))
         {
             
-            if (bullet == blueBullet) //blue
+            if (bullet == blackBullet) //검정총이라면
             {
-                bullet = redBullet;
-            }
-            else if(bullet == redBullet)
-            {
-                bullet = greenBullet;
+                bullet = whiteBullet;
+                UIController.instance.updateBulletColor(1);
             }
             else
             {
-                bullet = blueBullet;
+                bullet = blackBullet;
+                UIController.instance.updateBulletColor(2);
             }
         }
 
         if (Input.GetKeyDown(KeyCode.R) && bulletReload == 1)
         {
             Debug.Log("reload!");
-            bulletCharge = 10;
+            audios[2].Play();
+            gameManager.instance.bulletCharge = 10;
+            UIController.instance.updateBulletRemain();
         }
 
     }
@@ -94,8 +105,9 @@ public class player : MonoBehaviour
     }
     void Start()
     {
-        bulletCharge = 10;
-        bullet = blueBullet;
+        audios = GetComponents<AudioSource>();
+        bullet = whiteBullet;
+        if (audios != null) Debug.Log("sucess auid");
     }
 
     // Update is called once per frame
@@ -122,6 +134,7 @@ public class player : MonoBehaviour
         if (other.gameObject.tag == "UpgradePoint")
         {
             Debug.Log("can reload!");
+            UIController.instance.reloadUI.SetActive(true);
             bulletReload = 1;
         }
     }
@@ -131,6 +144,7 @@ public class player : MonoBehaviour
         if (other.gameObject.tag == "UpgradePoint")
         {
             Debug.Log("cant reload!");
+            UIController.instance.reloadUI.SetActive(false);
             bulletReload = 0;
         }
     }

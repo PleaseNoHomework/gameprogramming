@@ -7,9 +7,14 @@ TagManager:
   - stealingpoint
   - sittingpoint
   - pickuppoint
-  - waypoint
   - UpgradePoint
   - playerTrigger
+  - Wall
+  - WhiteEnemy
+  - BlackEnemy
+  - WhiteBullet
+  - BlackBullet
+  - RedBullet
   layers:
   - Default
   - TransparentFX
@@ -23,12 +28,12 @@ TagManager:
   - Building
   - Ground
   - Player
-  - Bullets
-  - Vending
-  - Redbullets
-  - Redvending
-  - Greenbullets
-  - Greenvending
+  - Enemy
+  - Bullet
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
