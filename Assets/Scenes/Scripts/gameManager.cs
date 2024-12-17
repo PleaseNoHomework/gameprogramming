@@ -14,7 +14,7 @@ public class gameManager : MonoBehaviour
     public GameObject tutorialGame;
     public GameObject pauseGame;
     public int score = 0;
-    public int enemySpawn = 20;
+    public int enemySpawn = 40;
     public int enemyKill = 0;
     public int bulletCharge;
     public int playerLife = 3;
@@ -40,7 +40,7 @@ public class gameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemyKill >= 15) //15마리 이상 죽인다면
+        if (enemyKill >= 25) //25마리 이상 죽인다면
         {
             SceneManager.LoadScene("WinScene");
         }

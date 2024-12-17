@@ -15,7 +15,7 @@ public class UIController : MonoBehaviour
     public Image currentNexusHP;
     public void updateKillCount()
     {
-        int count = 20 - gameManager.instance.enemyKill;
+        int count = 25 - gameManager.instance.enemyKill;
         killCount.text = count.ToString();
     }
 
