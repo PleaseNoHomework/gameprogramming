@@ -83,34 +83,38 @@ public class EnemyStatus : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_state == State.Die) { }
-        else if (_state != State.Stop) transform.Translate(new Vector3(0, 0, 1) * speed * Time.deltaTime);
-        else //플레이어를 놓친 경우
+        if (!gameManager.instance.isGamePaused)
         {
-            stopTime += Time.deltaTime;
-            if (stopTime > 1f)
+            if (_state == State.Die) { }
+            else if (_state != State.Stop) transform.Translate(new Vector3(0, 0, 1) * speed * Time.deltaTime);
+            else //플레이어를 놓친 경우
             {
-                stopTime = 0;
+                stopTime += Time.deltaTime;
+                if (stopTime > 1f)
+                {
+                    stopTime = 0;
+                    _state = State.Move2Nexus;
+                }
+            }
+            time += Time.deltaTime;
+            if (_state == State.Idle && time >= 8f) //소환하고 움직이다가 8초가 넘어간다면
+            {
                 _state = State.Move2Nexus;
             }
-        }
-        time += Time.deltaTime;
-        if (_state == State.Idle && time >= 100f) //소환하고 움직이다가 5초가 넘어간다면
-        {
-            _state = State.Move2Nexus;
+
+            switch (_state)
+            {
+                case State.Idle: //각각의 적마다 다름
+                    break;
+                case State.Move2Nexus:
+                    toTarget(nexus.transform);
+                    break;
+                case State.FindPlayer:
+                    toTarget(player.transform);
+                    break;
+            }
         }
 
-        switch (_state)
-        {
-            case State.Idle: //각각의 적마다 다름
-                break;
-            case State.Move2Nexus:
-                toTarget(nexus.transform);
-                break;
-            case State.FindPlayer:
-                toTarget(player.transform);
-                break;
-        }
 
         if (HP <= 0)
         {
@@ -151,7 +155,7 @@ public class EnemyStatus : MonoBehaviour
 
         if (collision.gameObject.CompareTag("UpgradePoint"))
         {
-            gameManager.instance.nexusLife--;
+            //gameManager.instance.nexusLife--;
             UIController.instance.updateHPBar();
             Debug.Log("<<<");
             Destroy(gameObject);

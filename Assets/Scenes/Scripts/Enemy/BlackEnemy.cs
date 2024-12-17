@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BlackEnemy : MonoBehaviour
 {
+    public float duration;
     public EnemyStatus enemy;
     float times = 0;
     // Start is called before the first frame update
@@ -11,7 +12,7 @@ public class BlackEnemy : MonoBehaviour
     void aiMove2()
     {
         times += Time.deltaTime;
-        if (times > 0.7f)
+        if (times > duration)
         {
             times = 0;
             gameObject.transform.Rotate(new Vector3(0, 180f, 0));
@@ -25,7 +26,7 @@ public class BlackEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemy._state == EnemyStatus.State.Idle) aiMove2();
+        if (enemy._state == EnemyStatus.State.Idle && !gameManager.instance.isGamePaused) aiMove2();
     }
 
     private void OnCollisionEnter(Collision collision)

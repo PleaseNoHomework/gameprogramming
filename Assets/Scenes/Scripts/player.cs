@@ -12,8 +12,15 @@ public class player : MonoBehaviour
     public GameObject whiteBullet;
     float bulletcoll = 0;
     int flag = 0;
-    
+    public Animator sn;
+    public enum State
+    {
+        Idle,
+        Walk,
+        Run
+    }
 
+    public State _state;
     //오디오 소스 0 : 총격발 1 : 빈총격발 2 : 재장전소리
     AudioSource[] audios;
     float MouseX;
@@ -46,6 +53,26 @@ public class player : MonoBehaviour
         {
             transform.Translate(0, 0, -speed * Time.deltaTime);
         }
+
+        bool iswalk = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D); //움직이고 있는가
+
+        if (iswalk)
+        {
+            sn.SetBool("walking", true);
+        }
+        else { 
+            sn.SetBool("walking", false);
+            sn.SetBool("running", false);
+        }
+        
+
+        if (Input.GetKey(KeyCode.LeftShift)) //뛰고있을때
+        {
+            sn.SetBool("running", true);
+        }
+        else sn.SetBool("running", false);
+
+        if(Input.GetKeyUp(KeyCode.LeftShift)) sn.SetBool("running", false);
 
     }
 
@@ -99,8 +126,6 @@ public class player : MonoBehaviour
 
     private void Awake()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
 
     }
     void Start()
@@ -108,24 +133,29 @@ public class player : MonoBehaviour
         audios = GetComponents<AudioSource>();
         bullet = whiteBullet;
         if (audios != null) Debug.Log("sucess auid");
+        _state = State.Idle;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Rotate();
-        Move();
-        Shoot();
-
-        if (flag == 1)
+        if (!gameManager.instance.isGamePaused)
         {
-            bulletcoll += Time.deltaTime;
-            if (bulletcoll > 0.5f)
+            Rotate();
+            Move();
+            Shoot();
+
+            if (flag == 1)
             {
-                flag = 0;
-                bulletcoll = 0;
+                bulletcoll += Time.deltaTime;
+                if (bulletcoll > 0.5f)
+                {
+                    flag = 0;
+                    bulletcoll = 0;
+                }
             }
         }
+
     }
 
 

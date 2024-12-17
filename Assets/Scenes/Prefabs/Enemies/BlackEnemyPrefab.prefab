@@ -3334,7 +3334,7 @@ MonoBehaviour:
     type: 3}
   dieAudio: {fileID: 3268060524312320980}
   dieFlag: 0
-  speed: 20
+  speed: 15
   _state: 0
   moveDirection: {x: 0, y: 0, z: 0}
   time: 0
@@ -3351,6 +3351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fb688701d6863044862573ab1c6c11d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  duration: 1.5
   enemy: {fileID: -2564032433295068500}
 --- !u!54 &7536599504342998568
 Rigidbody:
@@ -3803,7 +3804,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 10, y: 0.24001986, z: 10}
+  m_Size: {x: 15, y: 0.24001986, z: 15}
   m_Center: {x: 0, y: 0.37999007, z: 0}
 --- !u!114 &5138443035647302104
 MonoBehaviour:

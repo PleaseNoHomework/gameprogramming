@@ -21,7 +21,7 @@ public class WhiteEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemy._state == EnemyStatus.State.Idle) whiteMove();
+        if (enemy._state == EnemyStatus.State.Idle && !gameManager.instance.isGamePaused) whiteMove();
     }
 
     private void OnCollisionEnter(Collision collision)
